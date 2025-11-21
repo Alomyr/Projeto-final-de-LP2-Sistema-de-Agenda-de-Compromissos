@@ -1,9 +1,16 @@
 package domain.model;
 
+import annotation.InfoAutor;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+@InfoAutor(
+    nome = "Matheus Castro", 
+    data = "27/11/2025",
+    versao = "1.0",
+    descricao = "Classe base para todos os tipo de compromisso"
+)
 public class Compromisso {
 
     private String id;

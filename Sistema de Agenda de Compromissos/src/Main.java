@@ -2,14 +2,14 @@
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Scanner;
-import repository.RepositorioSimples;
+import repository.Repositorio;
 import service.CompromissoService;
 public class Main {
 
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
-        RepositorioSimples repo = new RepositorioSimples();
+        Repositorio repo = new Repositorio();
         CompromissoService service = new CompromissoService(repo);
 
         while (true) {

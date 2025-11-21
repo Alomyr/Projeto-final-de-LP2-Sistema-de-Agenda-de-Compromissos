@@ -1,18 +1,25 @@
 package service;
 
+import annotation.InfoAutor;
 import domain.model.Compromisso;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
-import repository.RepositorioSimples;
-
+import repository.Repositorio;
+@InfoAutor(
+    nome = "Matheus Castro", 
+    data = "27/11/2025",
+    versao = "1.0",
+    descricao = "Serviço principal para gestão de compromissos com validações de negócio, " +
+               "controle de conflitos e integração com repositório e árvore ABB"
+)
 public class CompromissoService {
 
-    private final RepositorioSimples repo;
+    private final Repositorio repo;
     private int sequence = 1;
 
-    public CompromissoService(RepositorioSimples repo) {
+    public CompromissoService(Repositorio repo) {
         this.repo = repo;
     }
 

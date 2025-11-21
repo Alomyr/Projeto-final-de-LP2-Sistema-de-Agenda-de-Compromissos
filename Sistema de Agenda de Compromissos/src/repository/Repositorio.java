@@ -1,11 +1,19 @@
 package repository;
 
+import annotation.InfoAutor;
 import domain.model.Compromisso;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RepositorioSimples {
+
+@InfoAutor(
+    nome = "Matheus Castro", 
+    data = "27/11/2025",
+    versao = "1.0",
+    descricao = "Classe basica para as function que o usario pode usar respeitando as regras de negocios"
+)
+public class Repositorio {
 
     private final List<Compromisso> lista = new ArrayList<>();
 
