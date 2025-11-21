@@ -1,11 +1,9 @@
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Scanner;
 import repository.RepositorioSimples;
 import service.CompromissoService;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 public class Main {
 
     public static void main(String[] args) {
@@ -70,3 +68,4 @@ public class Main {
         }
     }
 }
+// para verificar as coisas basta usar  if(date.equals(/* data e hora da coisa */)) @TheeoHenrique
