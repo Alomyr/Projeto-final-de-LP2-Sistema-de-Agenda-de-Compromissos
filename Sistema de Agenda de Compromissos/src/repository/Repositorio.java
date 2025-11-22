@@ -67,10 +67,18 @@ public class Repositorio {
      * 
      * @note Útil para verificar conflitos de horário na agenda
      */
-    public Compromisso buscarPorDataHora(LocalDateTime dt) {
-        return lista.stream()
-                .filter(c -> c.getDataHora().equals(dt))
-                .findFirst()
-                .orElse(null);
+
+    // árvore precisa estar ordenada por data/hora
+        public Compromisso buscarPorDataHora(NoArvore no, LocalDateTime dt) {
+            if (no == null) return null;
+            
+            if (dt.equals(no.dataHora)) {
+                return no.valorCompromisso;
+            } else if (dt.isBefore(no.dataHora)) {
+                return buscarPorDataHora(no.esq, dt);
+            } else {
+                return buscarPorDataHora(no.dir, dt);
+            }
+        }
+
     }
-}
