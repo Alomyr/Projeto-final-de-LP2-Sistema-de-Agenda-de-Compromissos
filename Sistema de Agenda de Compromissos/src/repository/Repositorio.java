@@ -41,9 +41,28 @@ public class Repositorio {
      * @return Compromisso encontrado ou null se não existir
      */
     //TODO @Guilherme-Andriel buscar por id. Tem que pegar a árvore, transformar numa lista, e buscar por id nessa lista.
-    public Compromisso buscarPorId(String id) {
-        return null;
+   public Compromisso buscarPorId(String id) {
+    List<Compromisso> lista = new ArrayList<>();
+    percorrerEmOrdem(tree.getRaiz(), lista);
+
+    for (Compromisso c : lista) {
+        if (c.getId().equals(id)) {
+            return c;
+        }
     }
+
+    return null;
+    }
+    // método auxiliar (conversão da árvore para lista)
+    private void percorrerEmOrdem(NoArvore no, List<Compromisso> lista) {
+        if (no == null || no.getCompromisso() == null) return;
+
+        percorrerEmOrdem(no.getLeft(), lista);
+        lista.add(no.getCompromisso());
+        percorrerEmOrdem(no.getRight(), lista);
+    }
+
+
 
     public Arvore getTree(){
         return this.tree;
