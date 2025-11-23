@@ -1,70 +1,100 @@
-
+import domain.model.Compromisso;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Scanner;
-import repository.Repositorio;
+import repository.RepositorioHash;
 import service.CompromissoService;
+
 public class Main {
 
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
-        Repositorio repo = new Repositorio();
+        
+        RepositorioHash<Compromisso> repo = new RepositorioHash<>(Compromisso::getId);
         CompromissoService service = new CompromissoService(repo);
 
         while (true) {
+            System.out.println("\n--- TIME MASTER ---");
             System.out.println("1 - Cadastrar");
             System.out.println("2 - Listar");
             System.out.println("3 - Buscar por ID");
             System.out.println("4 - Remover");
             System.out.println("0 - Sair");
+            System.out.print("Opção: ");
+            
             int op = sc.nextInt();
-            sc.nextLine();
+            sc.nextLine(); 
 
             if (op == 0) break;
 
-            switch (op) {
-                case 1:
-                    System.out.print("Dia: ");
-                    int dia = sc.nextInt();
-                    System.out.print("Mês: ");
-                    int mes = sc.nextInt();
-                    System.out.print("Ano: ");
-                    int ano = sc.nextInt();
-                    System.out.print("Hora: ");
-                    int h = sc.nextInt();
-                    System.out.print("Minuto: ");
-                    int m = sc.nextInt();
-                    sc.nextLine();
+            try { 
+                switch (op) {
+                    case 1:
+                        System.out.print("Dia: ");
+                        int dia = sc.nextInt();
+                        System.out.print("Mês: ");
+                        int mes = sc.nextInt();
+                        System.out.print("Ano: ");
+                        int ano = sc.nextInt();
+                        System.out.print("Hora: ");
+                        int h = sc.nextInt();
+                        System.out.print("Minuto: ");
+                        int m = sc.nextInt();
+                        sc.nextLine();
 
-                    System.out.print("Título: ");
-                    String t = sc.nextLine();
+                        System.out.print("Título: ");
+                        String t = sc.nextLine();
 
-                    System.out.print("Desc: ");
-                    String d = sc.nextLine();
+                        System.out.print("Desc: ");
+                        String d = sc.nextLine();
 
-                    System.out.print("Prioridade: ");
-                    int p = sc.nextInt();
+                        System.out.print("Prioridade: ");
+                        int p = sc.nextInt();
 
-                    service.cadastrar(LocalDate.of(ano, mes, dia), LocalTime.of(h, m), t, d, p);
-                    System.out.println("OK!");
-                    break;
+                        service.cadastrar(LocalDate.of(ano, mes, dia), LocalTime.of(h, m), t, d, p);
+                        System.out.println(">> Sucesso: Compromisso cadastrado!");
+                        break;
+    
+                    case 2:
+                        System.out.println("\n--- AGENDA ---");
+                        List<Compromisso> lista = service.listarTodos();
+                        
+                        if (lista.isEmpty()) {
+                            System.out.println("Nenhum compromisso agendado.");
+                        } else {
+                            for (Compromisso c : lista) {
+                                System.out.println(c); 
+                            }
+                        }
+                        break;
 
-                case 2:
-                    service.listarTodos();
-                    break;
-
-                case 3:
-                    System.out.print("ID: ");
-                    String id = sc.nextLine();
-                    System.out.println(repo.buscarPorId(id));
-                    break;
-
-                case 4:
-                    System.out.print("ID: ");
-                    service.remover(sc.nextLine());
-                    break;
+                    case 3:
+                        System.out.print("ID para busca: ");
+                        String idBusca = sc.nextLine();
+                        Compromisso encontrado = repo.buscarPorId(idBusca);
+                        
+                        if (encontrado != null) {
+                            System.out.println("Encontrado: " + encontrado);
+                        } else {
+                            System.out.println(">> Não encontrado.");
+                        }
+                        break;
+    
+                    case 4:
+                        System.out.print("ID para remover: ");
+                        service.remover(sc.nextLine());
+                        System.out.println(">> Operação de remoção concluída.");
+                        break;
+                    
+                    default:
+                        System.out.println("Opção inválida.");
+                }
+            } catch (Exception e) {
+                System.out.println("ERRO: " + e.getMessage());
             }
         }
+        sc.close();
     }
 }

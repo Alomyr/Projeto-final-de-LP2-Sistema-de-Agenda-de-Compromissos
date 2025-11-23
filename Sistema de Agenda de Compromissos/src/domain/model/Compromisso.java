@@ -120,7 +120,7 @@ public abstract class Compromisso {
      */
     @Override
     public String toString() {
-        return String.format("Compromisso [ID: %s, Data: %s, Hora: %s, Título: %s, Prioridade: %d]", 
-                           id, data, hora, titulo, prioridade);
+        return String.format("%s - %s | %s | %s | Prioridade: %d", 
+                data, hora, titulo, descricao, prioridade);
     }
 }

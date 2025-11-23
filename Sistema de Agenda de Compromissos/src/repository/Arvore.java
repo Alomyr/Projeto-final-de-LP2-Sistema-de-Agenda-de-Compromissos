@@ -3,62 +3,90 @@ package repository;
 import domain.model.Compromisso;
 import java.time.LocalDateTime;
 
-public class Arvore {
+public class Arvore implements IArvore<LocalDateTime, Compromisso> {
     private NoArvore raiz;
 
     public Arvore(){
         raiz = new NoArvore();
     }
 
-    public void Adicionar(Compromisso compromisso, NoArvore noAtual){
+    @Override
+    public void adicionar(Compromisso compromisso, NoArvore noAtual) {
         NoArvore novoNo = new NoArvore(compromisso, null, null);
-        if (this.raiz.value == null){ this.raiz = novoNo;}
-        else{
+        if (this.raiz.getCompromisso() == null){
+            this.raiz = novoNo;
+        } else {
+            if (noAtual == null) noAtual = this.raiz;
 
-            if (compromisso.getDataHora().isAfter(noAtual.value.getDataHora())){
-                if (noAtual.right != null){
-                    Adicionar(compromisso, noAtual.right);
+            if (compromisso.getDataHora().isAfter(noAtual.getCompromisso().getDataHora())){
+                if (noAtual.getRight() != null){
+                    adicionar(compromisso, noAtual.getRight());
                 } else {
-                    noAtual.right = novoNo;
-                    novoNo.pai = noAtual;
+                    noAtual.setRight(novoNo);
+                    novoNo.setPai(noAtual);
                 }
             }
-            else if (compromisso.getDataHora().isBefore(noAtual.value.getDataHora())){
-                if (noAtual.left != null){
-                    Adicionar(compromisso, noAtual.left);
+            else if (compromisso.getDataHora().isBefore(noAtual.getCompromisso().getDataHora())){
+                if (noAtual.getLeft() != null){
+                    adicionar(compromisso, noAtual.getLeft());
                 } else {
-                    noAtual.left = novoNo;
-                    novoNo.pai = noAtual;
+                    noAtual.setLeft(novoNo);
+                    novoNo.setPai(noAtual);
                 }
             }
         }
     }
 
-    public void Remover(Compromisso compromisso, NoArvore noAtual){
+    @Override
+    public void remover(Compromisso compromisso, NoArvore noAtual) {
         NoArvore target = buscarPorDataHora(noAtual, compromisso.getDataHora());
+        if (target == null) return;
 
-        //trata o caso do nó a ser removido ser folha
-        if (target.left == null && target.right == null) {
-            if (target == this.raiz){ target.value = null; }
-            else{
-                if (target.pai.left == target){ target.pai.left = null; }
-                else if (target.pai.right == target){ target.pai.right = null; }
+        // caso folha
+        if (target.getLeft() == null && target.getRight() == null) {
+            if (target == this.raiz){
+                this.raiz = new NoArvore();
+            } else {
+                if (target.getPai().getLeft() == target){
+                    target.getPai().setLeft(null);
+                } else if (target.getPai().getRight() == target){
+                    target.getPai().setRight(null);
+                }
             }
+            return;
         }
-        //trata o caso do nó a ser removido só ter filho à esquerda
-        else if (target.left != null){
-            target.value = target.left.value;
-            Remover(target.left.value, target.left);
+
+        // caso só tem filho à esquerda
+        if (target.getLeft() != null && target.getRight() == null){
+            NoArvore left = target.getLeft();
+            target.setCompromisso(left.getCompromisso());
+            // remove left node recursively
+            remover(left.getCompromisso(), left);
+            return;
         }
-        //trata o caso do nó a ser removido só ter filho à direita
-        else if (target.right != null){
-            target.value = target.right.value;
-            Remover(target.right.value, target.right);
+
+        // caso só tem filho à direita
+        if (target.getRight() != null && target.getLeft() == null){
+            NoArvore right = target.getRight();
+            target.setCompromisso(right.getCompromisso());
+            remover(right.getCompromisso(), right);
+            return;
         }
-        else if (target.left != null && target.right != null){
+
+        // caso tem os dois filhos
+        if (target.getLeft() != null && target.getRight() != null){
             NoArvore succ = getSucc(target);
-            target.value = succ.value;
-            if (succ.right != null){ succ.pai.left = succ.right; }
+            if (succ != null){
+                target.setCompromisso(succ.getCompromisso());
+                if (succ.getPai() != null){
+                    if (succ.getPai().getLeft() == succ) {
+                        succ.getPai().setLeft(succ.getRight());
+                    } else if (succ.getPai().getRight() == succ) {
+                        succ.getPai().setRight(succ.getRight());
+                    }
+                    if (succ.getRight() != null) succ.getRight().setPai(succ.getPai());
+                }
+            }
         }
     }
 
@@ -69,6 +97,11 @@ public class Arvore {
      * 
      * @note Útil para verificar conflitos de horário na agenda
      */
+    @Override
+    public NoArvore buscarPorChave(NoArvore no, LocalDateTime dt) {
+        return this.buscarPorDataHora(no, dt); // Redireciona para seu método existente
+    }
+
     public NoArvore buscarPorDataHora(NoArvore no, LocalDateTime dt) {
         if (no == null || no.value == null) {return null;}
         
@@ -82,39 +115,48 @@ public class Arvore {
     }
 
     //Aux functions
+    //Aux functions
     public NoArvore getMin(NoArvore root){
-        while (root.left != null){
-            return getMin(root.left);
+        if (root == null) return null;
+        while (root.getLeft() != null){
+            root = root.getLeft();
         }
         return root;
     }
     public NoArvore getMax(NoArvore root){
-        while (root.right != null){
-            return getMin(root.right);
+        if (root == null) return null;
+        while (root.getRight() != null){
+            root = root.getRight();
         }
         return root;
     }
 
     public NoArvore getPred(NoArvore root){
-        if (root.left != null){
-            return getMax(root.left);
+        if (root == null) return null;
+        if (root.getLeft() != null){
+            return getMax(root.getLeft());
         }
-        return null;
+        return root.getPai();
     }
 
     public NoArvore getSucc(NoArvore root){
-        if (root.right != null){
-            return getMin (root.right);
+        if (root == null) return null;
+        if (root.getRight() != null){
+            return getMin (root.getRight());
         }
-        return null;
+        return root.getPai();
         
     }
 
-    public NoArvore getRaiz(){
+    @Override
+    public NoArvore getRaiz() {
         return this.raiz;
     }
 
     public void printTree(NoArvore no){
+        if (no.left != null) printTree(no.left);
+        System.out.println(no.value.getDataHora() + " ");
+        if (no.right != null) printTree(no.right);
         if (no.left != null) printTree(no.left);
         System.out.println(no.value.getDataHora() + " ");
         if (no.right != null) printTree(no.right);
