@@ -6,6 +6,9 @@ import java.time.LocalDateTime;
 public class Arvore implements IArvore<LocalDateTime, Compromisso> {
     private NoArvore raiz;
 
+    /**
+     * @brief Constrói a árvore com um nó raíz padrão
+     */
     public Arvore(){
         raiz = new NoArvore();
     }
@@ -113,8 +116,7 @@ public class Arvore implements IArvore<LocalDateTime, Compromisso> {
             return buscarPorDataHora(no.right, dt);
         }
     }
-
-    //Aux functions
+  
     //Aux functions
     public NoArvore getMin(NoArvore root){
         if (root == null) return null;
@@ -139,6 +141,11 @@ public class Arvore implements IArvore<LocalDateTime, Compromisso> {
         return root.getPai();
     }
 
+    /**
+     * @brief Retorna sucessor de uma determinada árvore
+     * @param root Nó raíz da árvore
+     * @return Nó cuja dataHora é a sucessora do nó raíz
+     */
     public NoArvore getSucc(NoArvore root){
         if (root == null) return null;
         if (root.getRight() != null){
@@ -153,6 +160,11 @@ public class Arvore implements IArvore<LocalDateTime, Compromisso> {
         return this.raiz;
     }
 
+    //TODO: Ajeitar esse print (Só ta imprimindo a hora, para fins de teste)
+    /**
+     * @brief Imprime a árvore em In-Order (Ordem de dataHora)
+     * @param no
+     */
     public void printTree(NoArvore no){
         if (no.left != null) printTree(no.left);
         System.out.println(no.value.getDataHora() + " ");
