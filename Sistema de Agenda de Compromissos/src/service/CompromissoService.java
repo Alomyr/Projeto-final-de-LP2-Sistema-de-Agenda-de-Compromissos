@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import repository.RepositorioHash;
+import util.Ordenacao;
 
 @InfoAutor(
     nome = "Matheus Castro", 
@@ -20,9 +21,27 @@ public class CompromissoService {
 
     private final RepositorioHash<Compromisso> repo;
     private int sequence = 1;
+    private final Ordenacao<Compromisso> ordenacaoService;
 
     public CompromissoService(RepositorioHash<Compromisso> repo) {
         this.repo = repo;
+        this.ordenacaoService = new OrdenacaoService<>();
+    }
+
+    public List<Compromisso> listarCompromissosOrdenadosPorId() {
+        List<Compromisso> lista = repo.listarTodos(); 
+
+        ordenacaoService.ordenar(lista, Compromisso.POR_ID);
+
+        return lista;
+    }
+
+    public List<Compromisso> listarCompromissosPorPrioridade() {
+        List<Compromisso> lista = repo.listarTodos(); 
+        
+        ordenacaoService.ordenar(lista, Compromisso.POR_PRIORIDADE);
+        
+        return lista;
     }
 
     public void cadastrar(LocalDate data, LocalTime hora, String titulo, String descricao, int prioridade) {
