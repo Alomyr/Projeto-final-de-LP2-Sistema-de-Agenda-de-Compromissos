@@ -4,6 +4,7 @@ import annotation.InfoAutor;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Comparator;
 
 /**
  * @brief Classe abstrata base que representa um compromisso na agenda
@@ -123,4 +124,10 @@ public abstract class Compromisso {
         return String.format("%s - %s | %s | %s | Prioridade: %d", 
                 data, hora, titulo, descricao, prioridade);
     }
+
+    public static final Comparator<Compromisso> POR_ID = 
+        Comparator.comparingInt(c -> Integer.parseInt(c.getId()));
+
+    public static final Comparator<Compromisso> POR_PRIORIDADE = 
+        Comparator.comparingInt(Compromisso::getPrioridade).reversed();
 }

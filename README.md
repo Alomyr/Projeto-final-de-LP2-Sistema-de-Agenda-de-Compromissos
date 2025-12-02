@@ -229,8 +229,8 @@ Validações em tempo de execução
     // Adicionar à agenda
     agendaService.adicionarCompromisso(reuniao);
 
-    // Listar compromissos ordenados
-    List<Compromisso> ordenados = ordenacaoService.ordenarPorData();
+    // Listar compromissos ordenados por prioridade
+    List<Compromisso> ordenados = ordenacaoService.listarCompromissosPorPrioridade();
 
 ## 🗓️ Cronograma de Desenvolvimento dos conhecimentos em sala de aula:
 
@@ -272,6 +272,7 @@ Validações em tempo de execução
 - **E-mail e @github:** 
      
      matheuscastro11213@gmail.com / https://github.com/Alomyr
+     jamilly.s.campelo@gmail.com / https://github.com/jamilly-campelo
 
      theo123b@gmail.com / https://github.com/TheooHenrique
 

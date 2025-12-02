@@ -125,6 +125,7 @@ public class Arvore implements IArvore<LocalDateTime, Compromisso> {
         }
         return root;
     }
+    
     public NoArvore getMax(NoArvore root){
         if (root == null) return null;
         while (root.getRight() != null){
@@ -160,18 +161,16 @@ public class Arvore implements IArvore<LocalDateTime, Compromisso> {
         return this.raiz;
     }
 
-    //TODO: Ajeitar esse print (Só ta imprimindo a hora, para fins de teste)
     /**
      * @brief Imprime a árvore em In-Order (Ordem de dataHora)
      * @param no
      */
     public void printTree(NoArvore no){
-        if (no.left != null) printTree(no.left);
-        System.out.println(no.value.getDataHora() + " ");
-        if (no.right != null) printTree(no.right);
-        if (no.left != null) printTree(no.left);
-        System.out.println(no.value.getDataHora() + " ");
-        if (no.right != null) printTree(no.right);
+        if (no == null || no.getCompromisso() == null) return;
+
+        if (no.getLeft() != null) printTree(no.getLeft());
+        System.out.println(no.getCompromisso().toString());
+        if (no.getRight() != null) printTree(no.getRight());
     }
     
 }
