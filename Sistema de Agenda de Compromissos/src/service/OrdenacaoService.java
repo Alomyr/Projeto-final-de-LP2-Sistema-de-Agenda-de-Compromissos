@@ -3,9 +3,9 @@ package service;
 import java.util.Comparator;
 import java.util.List;
 
-import util.Ordenacao;
+import util.Ordenavel;
 
-public class OrdenacaoService<T> implements Ordenacao<T> {
+public class OrdenacaoService<T> implements Ordenavel<T> {
 
     private void heapify(List<T> lista, int n, int i, Comparator<T> comparator) {
         int largest = i;

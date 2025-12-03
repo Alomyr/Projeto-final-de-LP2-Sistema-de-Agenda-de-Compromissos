@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import repository.RepositorioHash;
-import util.Ordenacao;
+import util.Ordenavel;
 
 @InfoAutor(
     nome = "Matheus Castro", 
@@ -21,7 +21,7 @@ public class CompromissoService {
 
     private final RepositorioHash<Compromisso> repo;
     private int sequence = 1;
-    private final Ordenacao<Compromisso> ordenacaoService;
+    private final Ordenavel<Compromisso> ordenacaoService;
 
     public CompromissoService(RepositorioHash<Compromisso> repo) {
         this.repo = repo;
