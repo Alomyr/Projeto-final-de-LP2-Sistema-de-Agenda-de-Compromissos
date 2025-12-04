@@ -120,24 +120,31 @@ Demonstração no Main: adicionar, listar, buscar, remover, imprimir em ordem (�
 
         src/
         ├── model/
-        │   ├── Compromisso.java
-        │   ├── CompromissoPessoal.java
-        │   ├── CompromissoProfissional.java
-        │   └── enums/
-        │       ├── Prioridade.java
-        │       └── Categoria.java
+        │    ├── Compromisso.java
+        │    ├── CompromissoPessoal.java
+        │    ├── CompromissoProfissional.java
+        │    └── enums/
+        │         ├── Prioridade.java
+        │         └── Categoria.java
         ├── repository/
-        │   ├── Repositorio.java
-        │   ├── RepositorioHash.java
-        │   └── Arvore.java
+        │    ├── Repositorio.java
+        │    ├── RepositorioHash.java
+        │    └── Arvore.java
         ├── service/
-        │   ├── AgendaService.java
-        │   ├── OrdenacaoService.java
-        │   └── NegocioException.java
+        │    ├── AgendaService.java
+        │    ├── OrdenacaoService.java
+        │    └── NegocioException.java
+        ├── view/
+        │    ├── ViewConsole.java
+        │    ├── MenuPrincipal.java
+        │    └── HelpersView.java
         ├── annotation/
-        │   └── InfoAutor.java
+        │    └── InfoAutor.java
         └── main/
             └── Main.java
+
+
+
 
 ## 🚀 Como Compilar e Executar
 
