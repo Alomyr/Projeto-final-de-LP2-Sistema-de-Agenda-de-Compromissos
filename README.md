@@ -135,9 +135,7 @@ Demonstração no Main: adicionar, listar, buscar, remover, imprimir em ordem (�
         │    ├── OrdenacaoService.java
         │    └── NegocioException.java
         ├── view/
-        │    ├── ViewConsole.java
-        │    ├── MenuPrincipal.java
-        │    └── HelpersView.java
+        │    ├── CalendarioView.java
         ├── annotation/
         │    └── InfoAutor.java
         └── main/
